@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyeburu High School Institution</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; }
+    .container { width: 92%; max-width: 1200px; margin: auto; }
+
+    header { background: #003366; color: white; padding: 10px 0; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { height: 60px; border-radius: 4px; }
+    .brand h1 { font-size: 1.5rem; }
+    .brand p { font-size: 0.9rem; }
+    .lang-btn { background: #ffcc00; border: none; padding: 8px 12px; font-weight: bold; cursor: pointer; border-radius: 4px; }
+
+    .menu-toggle { display: none; background: #0055a5; color: white; padding: 12px; text-align: center; cursor: pointer; font-size: 1.1rem; }
+    nav { background: #0055a5; }
+    nav ul { list-style: none; display: flex; flex-wrap: wrap; }
+    nav li { flex: 1 1 auto; min-width: 120px; }
+    nav a { display: block; padding: 12px; color: white; text-align: center; text-decoration: none; font-weight: bold; }
+    nav a:hover { background: #003f7f; }
+
+    .hero { position: relative; overflow: hidden; background: #000; color: #fff; }
+    .slider { position: relative; width: 100%; height: 300px; }
+    .slides { display: flex; width: 100%; height: 100%; transition: transform 0.6s ease-in-out; }
+    .slide { min-width: 100%; height: 100%; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); }
+    .hero-caption { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2; }
+    .hero-caption h2 { font-size: 2rem; margin-bottom: 10px; }
+    .hero-caption p { font-size: 1rem; }
+
+    .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 20px; }
+    .arrow.prev { left: 10px; }
+    .arrow.next { right: 10px; }
+    .dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; }
+    .dot.active { background: #ffcc00; }
+
+    /* Cards */
+    .cards { padding: 20px 0; }
+    .cards-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .card-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-weight: bold;
+      color: #0055a5;
+      font-size: 1rem;
+      text-align: center;
+    }
+    @media (min-width: 600px) {
+      .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+
+    /* News */
+    .news { padding: 20px 0; }
+    .news-head { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .news-title { font-size: 1.3rem; font-weight: bold; color: #003366; text-align: center; }
+    .news article {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .news h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #0055a5;
+    }
+    .news p { font-size: 0.95rem; line-height: 1.5; }
+
+    footer { background: #003366; color: white; text-align: center; padding: 24px 0; }
+    footer h3 { margin-bottom: 8px; }
+    footer p { margin: 4px 0; }
+    iframe { border: 0; border-radius: 8px; margin-top: 12px; }
+
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      nav ul { display: none; flex-direction: column; }
+      nav ul.show { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <div class="brand">
+      <img src="https://ik.imagekit.io/ufntlgqjp/640px-Coat_of_arms_of_Tanzania.svg.png" alt="Logo" />
+      <div>
+        <h1 id="site-title">Nyeburu High School Institution</h1>
+        <p id="site-subtitle">Official Website</p>
+      </div>
+    </div>
+    <button class="lang-btn" onclick="toggleLanguage()">EN / SW</button>
+  </div>
+</header>
+
+<div class="menu-toggle" onclick="toggleMenu()">🟰 Menu</div>
+
+<nav>
+  <ul id="nav-list" class="container">
+    <li><a id="nav-home" href="#">Home</a></li>
+    <li><a id="nav-about" href="#">About Us</a></li>
+    <li><a id="nav-programs" href="#">Programs</a></li>
+    <li><a id="nav-publications" href="#">Publications</a></li>
+    <li><a id="nav-news" href="#">News</a></li>
+    <li><a id="nav-contact" href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="slider" id="slider">
+    <div class="slides" id="slides">
+      <div class="slide"><img src="https://ik.imagekit.io/ufntlgqjp/images (1).jpeg" alt="Slide 1" /></div>
+      <div class="slide"><img src="https://ik.imagekit.io/ufntlgqjp/images (2).jpeg" alt="Slide 2" /></div>
+      <div class="slide"><img src="https://ik.imagekit.io/ufntlgqjp/images (3).jpeg" alt="Slide 3" /></div>
+    
+    </div>
+    <div class="hero-caption">
+      <h2 id="hero-title">Karibu Nyeburu</h2>
+      <p id="hero-text">Committed to quality education and community impact.</p>
+    </div>
+    <button class="arrow prev" onclick="prevSlide()">‹</button>
+    <button class="arrow next" onclick="nextSlide()">›</button>
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section class="cards">
+  <div class="container">
+    <div class="cards-grid">
+      <a class="card" href="https://www.tie.go.tz/publications/academic-publications" target="_blank">
+        <img class="card-img" src="https://ik.imagekit.io/ufntlgqjp/icon-1734725299.svg" alt="Mitaala icon" />
+        <div class="card-title" id="card-mitaala">MITAALA</div>
+      </a>
+      <a class="card" href="https://ol.tie.go.tz/index.php?r=site/login" target="_blank">
+        <img class="card-img" src="https://ik.imagekit.io/ufntlgqjp/images (3).jpeg" alt="Maktaba Mtandao icon" />
+        <div class="card-title" id="card-maktaba">MAKTABA MTANDAO</div>
+      </a>
+      <a class="card" href="https://opschool.tie.go.tz/home" target="_blank">
+        <img class="card-img" src="https://ik.imagekit.io/ufntlgqjp/icon-1735648991.svg" alt="Online Secondary School icon" />
+        <div class="card-title" id="card-online">ONLINE SECONDARY SCHOOL</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news">
+  <div class="container">
+    <div class="news-head">
+      <div class="news-title" id="news-title">News & Updates</div>
+    </div>
+
+    <!-- School News -->
+    <article>
+      <h3 id="news1-title">Nyeburu High School Institution</h3>
+      <p id="news1-text">
+        Nyeburu Secondary School serves learners with dedication to academic excellence, discipline, and community values. The school focuses on strong foundational subjects, supportive teaching, and inclusive programs that nurture student potential. Facilities and resources are continually improved to enhance learning outcomes and character development.
+      </p>
+    </article>
+
+    <!-- MATUKIO -->
+    <article>
+      <img src="https://ik.imagekit.io/ufntlgqjp/4335be8d5938ae54c5a4a70df349799b.jpeg?updatedAt=1757061983250" alt="Matukio cover" style="width:100%; border-radius:8px; margin-bottom:10px;">
+      <h3>MATUKIO: MIAKA 50 YA TAASISI YA ELIMU TANZANIA</h3>
+      <p>
+        #KitabuKimojaMwanafunziMmoja — Kuwa sehemu ya maboresho ya Elimu nchini kwa kufanikisha upatikanaji wa vitabu vya Kiada kuanzia Elimu ya Awali mpaka Kidato cha Sita na Kompyuta mpakato maalumu kwa wanafunzi wote wa Kidato cha Tano na Sita katika mikoa kumi ya Tanzania Bara na Zanzibar...
+      </p>
+      <a href="matukio.html" style="display:inline-block; margin-top:8px; background:#0055a5; color:white; padding:8px 12px; border-radius:4px; text-decoration:none;">Read More</a>
+    </article>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<!-- FOOTER -->
+<footer style="background:#00264d; color:white; padding:30px 0; font-size:0.95rem;">
+  <div class="container" style="display:grid; gap:20px; grid-template-columns: 1fr; text-align:center;">
+
+    <!-- Column 1: Contact Info -->
+    <div>
+      <h3 style="color:#ffcc00; margin-bottom:10px;">Contact Us</h3>
+      <p><strong>Nyeburu High School Institution</strong></p>
+      <p>Phone: <a href="tel:+255622561895" style="color:#ffcc00; text-decoration:none;">0622 561 895</a></p>
+      <p>Email: <a href="mailto:hamisisalehe10@gmail.com" style="color:#ffcc00; text-decoration:none;">hamisisalehe10@gmail.com</a></p>
+      <p><em>Education for Progress</em></p>
+    </div>
+
+    <!-- Column 2: Location -->
+    <div>
+      <h3 style="color:#ffcc00; margin-bottom:10px;">Location</h3>
+      <p>
+        <a href="https://maps.app.goo.gl/J962pRfHBATKGLF28" target="_blank" style="color:#ffcc00; font-weight:bold; text-decoration:none;">
+          📍 View on Google Maps
+        </a>
+      </p>
+      <div style="width: 100%; max-width: 500px; margin: 0 auto;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.123456789!2d39.280000!3d-6.820000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4c123456789%3A0xabcdef123456789!2sNyeburu%20High%20School!5e0!3m2!1sen!2stz!4v1693920000000"
+          width="100%" height="200" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Column 3: Copyright -->
+    <div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.2); padding-top:10px;">
+      <p>&copy; 2025 Nyeburu High School. All rights reserved.</p>
+    </div>
+
+  </div>
+</footer>JAVASCRIPT -->
+<script>
+  function toggleMenu() {
+    document.getElementById('nav-list').classList.toggle('show');
+  }
+
+  let currentSlide = 0;
+  const slides = document.getElementById('slides');
+  const totalSlides = slides.children.length;
+  const dotsContainer = document.getElementById('dots');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function updateSlider() {
+    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+    const dots = dotsContainer.children;
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle('active', i === currentSlide);
+    }
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlider();
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateSlider();
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateSlider();
+  }
+
+  setInterval(nextSlide, 5000);
+
+  let lang = 'en';
+  const content = {
+    en: {
+      siteTitle: "Nyeburu High School Institution",
+      siteSubtitle: "Official Website",
+      nav: ["Home","About Us","Programs","Publications","News","Contact"],
+      heroTitle: "Karibu Nyeburu",
+      heroText: "Committed to quality education and community impact.",
+      cards: {
+        mitaala: "MITAALA",
+        maktaba: "MAKTABA MTANDAO",
+        online: "ONLINE SECONDARY SCHOOL"
+      },
+      newsTitle: "News & Updates",
+      news1Title: "Nyeburu High School Institution",
+      news1Text: "Nyeburu Secondary School serves learners with dedication to academic excellence..."
+    },
+    sw: {
+      siteTitle: "Shule ya Sekondari Nyeburu",
+      siteSubtitle: "Tovuti Rasmi",
+      nav: ["Mwanzo","Kuhusu Sisi","Programu","Machapisho","Habari","Mawasiliano"],
+      heroTitle: "Karibu Nyeburu",
+      heroText: "Tumejizatiti kwa elimu bora na maendeleo ya jamii.",
+      cards: {
+        mitaala: "MITAALA",
+        maktaba: "MAKTABA MTANDAO",
+        online: "SHULE YA SEKONDARI MTANDAO"
+      },
+      newsTitle: "Habari na Taarifa",
+      news1Title: "Shule ya Sekondari Nyeburu",
+      news1Text: "Shule ya Sekondari Nyeburu ni taasisi ya serikali inayotoa elimu bora..."
+    }
+  };
+
+  function toggleLanguage() {
+    lang = lang === 'en' ? 'sw' : 'en';
+    const c = content[lang];
+    document.getElementById('site-title').textContent = c.siteTitle;
+    document.getElementById('site-subtitle').textContent = c.siteSubtitle;
+    const [home, about, programs, publications, news, contact] = c.nav;
+    document.getElementById('nav-contact').textContent = contact;
+    document.getElementById('hero-title').textContent = c.heroTitle;
+    document.getElementById('hero-text').textContent = c.heroText;
+    document.getElementById('card-mitaala').textContent = c.cards.mitaala;
+    document.getElementById('card-maktaba').textContent = c.cards.maktaba;
+    document.getElementById('card-online').textContent = c.cards.online;
+    document.getElementById('news-title').textContent = c.newsTitle;
+    document.getElementById('news1-title').textContent = c.news1Title;
+    document.getElementById('news1-text').textContent = c.news1Text;
+  }
+</script>
+
+</body>
+</html>.getElementById('nav-home "1")</
+
+    
